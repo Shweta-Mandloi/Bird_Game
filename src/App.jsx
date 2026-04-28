@@ -178,6 +178,44 @@ function App() {
           <div className="mountain mountain-1"></div>
           <div className="mountain mountain-2"></div>
         </div>
+        <div className="trees">
+          <div className="tree tree-1">
+            <div className="tree-foliage layer1"></div>
+            <div className="tree-foliage layer2"></div>
+            <div className="tree-foliage layer3"></div>
+            <div className="tree-trunk"></div>
+          </div>
+          <div className="tree tree-2">
+            <div className="tree-foliage layer1"></div>
+            <div className="tree-foliage layer2"></div>
+            <div className="tree-foliage layer3"></div>
+            <div className="tree-trunk"></div>
+          </div>
+          <div className="tree tree-3">
+            <div className="tree-foliage layer1"></div>
+            <div className="tree-foliage layer2"></div>
+            <div className="tree-foliage layer3"></div>
+            <div className="tree-trunk"></div>
+          </div>
+          <div className="tree tree-4">
+            <div className="tree-foliage layer1"></div>
+            <div className="tree-foliage layer2"></div>
+            <div className="tree-foliage layer3"></div>
+            <div className="tree-trunk"></div>
+          </div>
+          <div className="tree tree-5">
+            <div className="tree-foliage layer1"></div>
+            <div className="tree-foliage layer2"></div>
+            <div className="tree-foliage layer3"></div>
+            <div className="tree-trunk"></div>
+          </div>
+          <div className="tree tree-6">
+            <div className="tree-foliage layer1"></div>
+            <div className="tree-foliage layer2"></div>
+            <div className="tree-foliage layer3"></div>
+            <div className="tree-trunk"></div>
+          </div>
+        </div>
       </div>
 
       {/* Pipes */}
