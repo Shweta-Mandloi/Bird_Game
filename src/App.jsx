@@ -6,20 +6,38 @@ const JUMP_STRENGTH = -10;
 const PIPE_SPEED = 3;
 const PIPE_GAP = 170;
 const PIPE_WIDTH = 70;
-const PIPE_SPACING = 250;
+
+function shadeColor(color, percent) {
+  const f = parseInt(color.slice(1), 16);
+  const t = percent < 0 ? 0 : 255;
+  const p = Math.abs(percent) / 100;
+  const R = Math.round(((f >> 16) & 0xff) * (1 - p) + t * p);
+  const G = Math.round(((f >> 8) & 0xff) * (1 - p) + t * p);
+  const B = Math.round((f & 0xff) * (1 - p) + t * p);
+  return `#${((1 << 24) + (R << 16) + (G << 8) + B).toString(16).slice(1)}`;
+}
 
 function App() {
   const [gameState, setGameState] = useState('start'); // start, playing, gameover
   const [birdY, setBirdY] = useState(300);
   const [birdVelocity, setBirdVelocity] = useState(0);
   const [score, setScore] = useState(0);
+  const [birdColor, setBirdColor] = useState('#ffd93d');
+  const presetBirdColors = ['#ffd93d', '#00b894', '#6c5ce7', '#ff7675', '#00cec9'];
   const [highScore, setHighScore] = useState(() => {
     const saved = localStorage.getItem('birdGameHighScore');
     return saved ? parseInt(saved) : 0;
   });
   const [pipes, setPipes] = useState([]);
   const gameLoopRef = useRef(null);
-  const birdRef = useRef(null);
+
+  const gameOver = useCallback(() => {
+    setGameState('gameover');
+    if (score > highScore) {
+      setHighScore(score);
+      localStorage.setItem('birdGameHighScore', score.toString());
+    }
+  }, [score, highScore]);
 
   const jump = useCallback(() => {
     if (gameState === 'playing') {
@@ -122,6 +140,7 @@ function App() {
     const birdLeft = 80;
     const birdRight = 140;
 
+    /* eslint-disable react-hooks/set-state-in-effect */
     // Check ground collision
     if (birdBottom > 520 || birdTop < 0) {
       gameOver();
@@ -139,15 +158,8 @@ function App() {
         }
       }
     });
-  }, [birdY, pipes, gameState]);
-
-  const gameOver = () => {
-    setGameState('gameover');
-    if (score > highScore) {
-      setHighScore(score);
-      localStorage.setItem('birdGameHighScore', score.toString());
-    }
-  };
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [birdY, pipes, gameState, gameOver]);
 
   return (
     <div className="game-container" onClick={() => {
@@ -187,11 +199,21 @@ function App() {
         className={`bird ${gameState === 'playing' ? 'flapping' : ''}`}
         style={{ top: birdY }}
       >
-        <div className="bird-body">
+        <div
+          className="bird-body"
+          style={{
+            background: `radial-gradient(ellipse at 30% 30%, ${birdColor}, ${shadeColor(birdColor, -25)})`,
+          }}
+        >
           <div className="bird-eye"></div>
           <div className="bird-beak"></div>
         </div>
-        <div className="bird-wing"></div>
+        <div
+          className="bird-wing"
+          style={{
+            background: `linear-gradient(135deg, ${shadeColor(birdColor, 20)}, ${shadeColor(birdColor, -15)})`,
+          }}
+        ></div>
       </div>
 
       {/* Ground */}
@@ -211,6 +233,30 @@ function App() {
         <div className="high-score-display">
           <span className="high-score-label">BEST</span>
           <span className="high-score-value">{highScore}</span>
+        </div>
+
+        {/* Bird Color Picker */}
+        <div className="color-panel" onClick={(e) => e.stopPropagation()}>
+          <label htmlFor="birdColor">Bird Color</label>
+          <div className="color-controls">
+            <input
+              id="birdColor"
+              type="color"
+              value={birdColor}
+              onChange={(e) => setBirdColor(e.target.value)}
+            />
+            <div className="preset-colors">
+              {presetBirdColors.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  className={`preset-color ${birdColor === color ? 'selected' : ''}`}
+                  style={{ background: color }}
+                  onClick={() => setBirdColor(color)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
