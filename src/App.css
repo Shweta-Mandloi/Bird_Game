@@ -53,28 +53,80 @@ body {
   filter: blur(2px);
 }
 
-.cloud-1 {
-  width: 120px;
-  height: 40px;
-  top: 30px;
-  left: 10%;
-  animation: cloudFloat 20s ease-in-out infinite;
+/* Trees */
+.trees {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  bottom: 80px;
+  pointer-events: none;
 }
 
-.cloud-2 {
-  width: 80px;
-  height: 30px;
-  top: 60px;
-  left: 50%;
-  animation: cloudFloat 25s ease-in-out infinite reverse;
+.tree {
+  position: absolute;
+  bottom: 0;
 }
 
-.cloud-3 {
-  width: 100px;
-  height: 35px;
-  top: 20px;
-  left: 75%;
-  animation: cloudFloat 22s ease-in-out infinite;
+.tree-1 {
+  left: 5%;
+  transform: scale(0.8);
+}
+
+.tree-2 {
+  left: 20%;
+  transform: scale(1);
+}
+
+.tree-3 {
+  left: 35%;
+  transform: scale(0.7);
+}
+
+.tree-4 {
+  left: 55%;
+  transform: scale(0.9);
+}
+
+.tree-5 {
+  left: 70%;
+  transform: scale(0.75);
+}
+
+.tree-6 {
+  left: 85%;
+  transform: scale(0.85);
+}
+
+.tree-trunk {
+  width: 15px;
+  height: 60px;
+  background: linear-gradient(to right, #5d4037, #3e2723);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.tree-foliage {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  margin: 0 auto;
+}
+
+.tree-foliage.layer1 {
+  border-width: 0 40px 50px 40px;
+  border-color: transparent transparent #2e7d32 transparent;
+}
+
+.tree-foliage.layer2 {
+  border-width: 0 35px 45px 35px;
+  border-color: transparent transparent #388e3c transparent;
+  margin-top: -30px;
+}
+
+.tree-foliage.layer3 {
+  border-width: 0 25px 35px 25px;
+  border-color: transparent transparent #43a047 transparent;
+  margin-top: -25px;
 }
 
 @keyframes cloudFloat {
